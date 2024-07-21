@@ -1,0 +1,29 @@
+{% extends './base.html' %}
+{% load static %}
+{% block css_links %}
+<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+<link rel="stylesheet" href="{% static 'libs/leaflet/leaflet.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+{% endblock %}
+
+{% block js_links %}
+<script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+<script src="{% static 'javascript/main.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="grid-container">
+    <div class="grid-1">
+        <div id="map"></div>
+    </div>
+
+    <div class="grid-2">
+          <div class="column-menu" id="menu-information">
+            <p id="menu_title"> Welcome to India Cultural Places </p>
+            <img id='placeimage' src="./media/place_images/Pratapgad_Main.jpg" alt="Pratapgad image">
+            <p id="menu_text"></p>
+          </div>
+    </div>
+</div>
+{% endblock %}
