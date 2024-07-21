@@ -1,3 +1,5 @@
+This is a sample project for demonstrating the cultural maps in Maharashtra using OSM.
+
 Local Dev environment:
 Windows 10 with WSL (Debian)
 
