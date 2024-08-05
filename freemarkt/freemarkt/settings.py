@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'freemarkt.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'udemyp1',
+        'NAME': 'postgres',
         'USER':'postgres',
         'PASSWORD':'true3',
         'HOST': '127.0.0.1',

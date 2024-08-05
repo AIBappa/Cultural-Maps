@@ -31,13 +31,25 @@ class Place(models.Model):
     
 class City(models.Model):
     ogc_fid = models.AutoField(primary_key=True)
-    id = models.CharField(max_length=100)  # Assuming id contains alphanumeric names
+    # ogc_fid = models.IntegerField(primary_key=True, default=1)
+    oldname = models.CharField(max_length=100)  # Assuming id contains alphanumeric names
     name = models.CharField(max_length=100)
     wkb_geometry = models.GeometryField()
 
     class Meta:
         db_table = "Cities_India"
         verbose_name_plural = 'Cities'
+
+    def __str__(self):
+        return self.name
+    
+class Contact(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
+    mobile = models.CharField(max_length=15)
+    address = models.CharField(max_length=100)
+    gps_location = models.PointField()
+    email = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name

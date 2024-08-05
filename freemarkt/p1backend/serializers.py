@@ -1,4 +1,4 @@
-from .models import Category, Place, City
+from .models import Category, Place, City, Contact
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 
@@ -30,11 +30,16 @@ class CitySerializer(GeoFeatureModelSerializer):
         geo_field = 'wkb_geometry'
 
         fields = (
-            'pk',
-            'id',
+            'ogc_fid',
+            'oldname',
             'name',
             'wkb_geometry',
             'proximity',
         )
 
+class ContactSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Contact
+        geo_field = 'gps_location'
+        fields = ['id', 'name', 'mobile', 'address', 'gps_location', 'email']
 

@@ -1,6 +1,6 @@
-from .models import Place, Category, City
-from .serializers import CategorySerializer, PlaceSerializer, CitySerializer
-from rest_framework import generics
+from .models import Place, Category, City, Contact
+from .serializers import CategorySerializer, PlaceSerializer, CitySerializer, ContactSerializer
+from rest_framework import generics,viewsets
 
 from django.http import Http404
 from django.contrib.gis.db.models.functions import Distance
@@ -47,6 +47,11 @@ class CityList(generics.ListAPIView):
         selectedPlaceGeom = selectedPlace.point_geom
         nearestCities = City.objects.annotate(distance=Distance('wkb_geometry', selectedPlaceGeom)).order_by('distance')[:4]
         return nearestCities
+    
+class ContactViewSet(viewsets.ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    name = 'contact-list'
 
 
     
