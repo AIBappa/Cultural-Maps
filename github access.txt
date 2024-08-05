@@ -1,0 +1,17 @@
+ssh-keygen -t ed25519 -C "70745640+AIBappa@users.noreply.github.com"
+
+git config --global user.email "70745640+AIBappa@users.noreply.github.com"
+
+psql -h 192.168.239.171 -p 5433 -U your_username -d your_database_name
+
+psql -h 192.168.239.171 -p 5433 -U postgres -d postgres
+
+psql -h localhost -p 5433 -U postgres -d postgres
+
+psql -h localhost -p 5433 -U postgres -d postgres
+
+psql -h <WSL2_IP> -U postgres -d udemyp1
+
+psql -h 192.168.239.171 -U postgres -d udemyp1
+
+

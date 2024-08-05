@@ -1,10 +1,12 @@
 from .models import Place, Category, City, Contact
 from .serializers import CategorySerializer, PlaceSerializer, CitySerializer, ContactSerializer
 from rest_framework import generics,viewsets
-
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from django.http import Http404
 from django.contrib.gis.db.models.functions import Distance
 from django.shortcuts import get_object_or_404
+from django.contrib.gis.geos import Point
 
 # Create your views here.
 class CategoryList(generics.ListCreateAPIView):
@@ -52,6 +54,44 @@ class ContactViewSet(viewsets.ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
     name = 'contact-list'
+    
+    # @action(detail=False, methods=['get'])
+    # def nearby(self, request):
+    #     try:
+    #         lat = float(request.query_params.get('lat'))
+    #         lng = float(request.query_params.get('lng'))
+    #         proximity = float(request.query_params.get('proximity', 5))  # Default to 5 km if not provided
+
+    #         user_location = Point(lng, lat, srid=4326)
+    #         contacts = Contact.objects.annotate(
+    #             distance=Distance('location', user_location)
+
+    #         serializer = self.get_serializer(contacts, many=True)
+    #         return Response(serializer.data)
+    #     except (TypeError, ValueError):
+    #         return Response({'error': 'Invalid parameters'}, status=400)
+    
+    @action(detail=False, methods=['get'])
+    def nearby(self, request):
+        try:
+            # Get latitude, longitude, and proximity from query parameters
+            lat = float(request.query_params.get('lat'))
+            lng = float(request.query_params.get('lng'))
+            proximity = float(request.query_params.get('proximity', 5))  # Default to 5 km if not provided
+
+            # Create a Point object for the user's location
+            user_location = Point(lng, lat, srid=4326)
+
+            # Filter contacts within the specified proximity
+            contacts = Contact.objects.annotate(
+                distance=Distance('gps_location', user_location)
+            ).filter(distance__lte=proximity * 1000)  # Convert km to meters
+
+            # Serialize and return the data
+            serializer = self.get_serializer(contacts, many=True)
+            return Response(serializer.data)
+        except (TypeError, ValueError):
+            return Response({'error': 'Invalid parameters'}, status=400)
 
 
     
