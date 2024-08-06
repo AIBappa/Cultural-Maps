@@ -65,6 +65,7 @@ class ContactViewSet(viewsets.ModelViewSet):
     #         user_location = Point(lng, lat, srid=4326)
     #         contacts = Contact.objects.annotate(
     #             distance=Distance('location', user_location)
+    #         ).filter(distance__lte=proximity * 1000)  # Convert km to meters
 
     #         serializer = self.get_serializer(contacts, many=True)
     #         return Response(serializer.data)
